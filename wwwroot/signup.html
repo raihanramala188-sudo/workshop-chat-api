@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign up · Campus Workshops</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <script type="module" src="/js/account.js"></script>
+</head>
+<body>
+    <header class="masthead">
+        <div class="wrap">
+            <p>DSTI School of Engineering</p>
+            <h1>Campus Workshops</h1>
+            <nav aria-label="Main navigation"><a href="/">Browse workshops</a><a href="/#login">Sign in</a></nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <h2>Create an account</h2>
+        <form id="signup" class="create-workshops" action="/api/auth/signup" method="post">
+            <fieldset>
+                <legend>Account details</legend>
+                <label for="username">Username</label>
+                <input id="username" name="userName" autocomplete="username" required minlength="3" maxlength="40"
+                       aria-describedby="username-help">
+                <small id="username-help">Use 3–40 letters, numbers, dots, hyphens or underscores.</small>
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="new-password"
+                       required minlength="12" maxlength="128" aria-describedby="password-help">
+                <small id="password-help">Use at least 12 characters.</small>
+                <button type="submit">Create account</button>
+            </fieldset>
+        </form>
+        <p id="account-status" role="status"></p>
+        <a id="continue-login" href="/#login" hidden>Sign in to get your API key</a>
+    </main>
+</body>
+</html>

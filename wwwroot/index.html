@@ -1,0 +1,140 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Campus Workshops</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <script src="/js/workshops.js" type="module"></script>
+</head>
+<body>
+    <header class="masthead">
+        <div class="wrap">
+            <p>DSTI School of Engineering</p>
+            <h1>Campus Workshops</h1>
+            <nav aria-label="Main navigation">
+                <a href="#workshops">Browse workshops</a>
+                <a href="#create">Create a workshop</a>
+                <a href="/signup.html">Sign up</a>
+            </nav>
+        </div>
+    </header>
+    <main class="wrap">
+        <section id="workshops" aria-labelledby="catalog-heading">
+            <h2 id="catalog-heading">Upcoming workshops</h2>
+            <form class="controls" id="filters">
+                <label for="category-filter">Category</label>
+                <select id="category-filter"><option value="">All categories</option></select>
+                <button type="submit">Apply filter</button>
+            </form>
+            <p id="status" role="status">Loading workshops…</p>
+            <noscript><p>Enable JavaScript to browse or create workshops.</p></noscript>
+            <div id="catalog" class="catalog"></div>
+            <!-- JavaScript fills one copy of this card for each row returned by the API. -->
+            <template id="card-template">
+                <article class="workshop">
+                    <p class="topic"></p>
+                    <h3><a class="detail-link"></a></h3>
+                    <p><time></time> · <span class="room"></span></p>
+                    <p class="description"></p>
+                    <p class="details"></p>
+                </article>
+            </template>
+        </section>
+
+                <section id="workshop-details" class="workshop" aria-labelledby="detail-title" hidden>
+            <h2 id="detail-title" tabindex="-1">Workshop details</h2>
+            <p id="detail-description"></p>
+            <dl id="detail-facts"></dl>
+            <button id="start-edit" type="button" hidden>Edit workshop</button>
+            <a id="edit-login" href="#login" hidden>Sign in to edit</a>
+            <form class="create-workshops" id="edit-form" hidden>
+                <fieldset>
+                    <legend>Editable fields</legend>
+                    <label for="edit-title">Title</label>
+                    <input id="edit-title" name="title" maxlength="80" required>
+                    <label for="edit-category">Category</label>
+                    <input id="edit-category" name="category" list="categories" maxlength="60" required>
+
+                    <label for="edit-date">Date</label>
+                    <input id="edit-date" name="date" type="date" required>
+                    <label for="edit-room">Room</label>
+                    <input id="edit-room" name="room" maxlength="60" required>
+                    <label for="edit-description">Description</label>
+                    <textarea id="edit-description" name="description" rows="3" maxlength="240" required></textarea>
+                    <label for="edit-level">Level</label>
+                    <input id="edit-level" name="level" list="levels" maxlength="60" required>
+
+                    <label for="edit-duration">Duration in minutes</label>
+                    <input id="edit-duration" name="duration" type="number" min="1" max="240" required>
+                    <label for="edit-seatsLeft">Seats left</label>
+                    <input id="edit-seatsLeft" name="seatsLeft" type="number" min="0" max="2147483647" required>
+                    <button type="submit">Save changes</button>
+                    <button type="button" id="cancel-edit">Cancel</button>
+                </fieldset>
+            </form>
+            <p id="detail-status" role="status"></p>
+            <a href="#workshops">Back to catalogue</a>
+        </section>
+
+
+<section id="create" aria-labelledby="create-heading">
+            <h2 id="create-heading">Create a workshop</h2>
+            <form class="create-workshops" id="login" method="post" action="/api/auth/login">
+                <fieldset>
+                    <legend>Sign in to create a workshop</legend>
+                    <label for="login-name">Username</label>
+                    <input id="login-name" name="userName" autocomplete="username" required>
+                    <label for="login-password">Password</label>
+                    <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+                    <button type="submit">Sign in</button>
+                </fieldset>
+                <p>New here? <a href="/signup.html">Create an account</a>.</p>
+            </form>
+            <p id="account-status" role="status"></p>
+            <details id="key-details" hidden>
+                <summary>View your API key</summary>
+                <code id="api-key"></code>
+            </details>
+            <form class="create-workshops" id="workshop-form" method="post" action="/api/workshops" hidden>
+                <fieldset>
+                    <legend>Workshop details</legend>
+                    <label for="title">Title</label>
+                    <input id="title" name="title" maxlength="80" required>
+                    <label for="category">Category</label>
+                    <input id="category" name="category" list="categories" maxlength="60" required>
+                    <datalist id="categories"></datalist>
+                    <label for="date">Date</label>
+                    <input id="date" name="date" type="date" required>
+                    <label for="room">Room</label>
+                    <input id="room" name="room" maxlength="60" required>
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="3" maxlength="240" required></textarea>
+                    <label for="level">Level</label>
+                    <input id="level" name="level" list="levels" maxlength="60" required>
+                    <datalist id="levels"><option>Beginner</option><option>Intermediate</option></datalist>
+                    <label for="duration">Duration in minutes</label>
+                    <input id="duration" name="duration" type="number" min="1" max="240" required>
+                    <label for="seatsLeft">Seats left</label>
+                    <input id="seatsLeft" name="seatsLeft" type="number" min="0" max="2147483647" required>
+                    <button type="submit">Create workshop</button>
+                </fieldset>
+            </form>
+            <p id="create-status" role="status"></p>
+        </section>
+    </main>
+  <script type="module" src="/js/detail.js"></script>
+<section id="chat" aria-labelledby="chat-heading">
+  <h2 id="chat-heading">Workshop chat</h2>
+  <ul id="chat-messages" aria-live="polite"></ul>
+  <form id="chat-form">
+    <label for="chat-input">Message</label>
+    <input id="chat-input" name="text" type="text" maxlength="1000" required />
+    <button type="submit">Send</button>
+  </form>
+  <p id="chat-status" role="status"></p>
+</section>
+  <script type="module" src="/js/chat.js"></script>
+</body>
+</html>
+
